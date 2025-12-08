@@ -1,0 +1,17 @@
+services:
+  moneypenny-api:
+    image: moneypenny-api-base
+    build:
+      context: ../../../
+      dockerfile: ./moneypenny-deployment/docker/image/moneypenny-api/Dockerfile.local
+    volumes:
+      - ../../../moneypenny-api/src:/moneypenny-api/src
+      - ../../../moneypenny-api/resource/document:/moneypenny-api/resource/document
+
+  # moneypenny-frontend:
+  #   image: moneypenny-frontend-base
+  #   build:
+  #     context: ../../../
+  #     dockerfile: ./moneypenny-deployment/docker/image/moneypenny-frontend/Dockerfile.local
+  #   volumes:
+  #     - ../../../moneypenny-frontend/src:/app/src

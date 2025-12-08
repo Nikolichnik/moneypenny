@@ -1,0 +1,28 @@
+FROM python:3.11-slim AS moneypenny-api-base
+
+RUN apt-get update && \
+    apt-get install -y python3-pip curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    node -v && \
+    npm -v && \
+    npm install -g @nutrient-sdk/dws-mcp-server && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --upgrade pip && \
+    pip3 install pipenv
+
+COPY ./moneypenny-api/resource/script/dws-mcp-wrapper.sh /usr/local/bin/dws-mcp-wrapper.sh
+COPY ./moneypenny-api/ /moneypenny-api
+
+ENV HOME=/moneypenny-api
+WORKDIR /moneypenny-api
+
+RUN pipenv install --deploy --ignore-pipfile
+
+WORKDIR /moneypenny-api/src
+
+EXPOSE 5000
+
+CMD [ "echo", "Hello from the moneypenny-api-base container." ]

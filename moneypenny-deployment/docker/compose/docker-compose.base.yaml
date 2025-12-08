@@ -1,0 +1,27 @@
+services:
+  moneypenny-api:
+    image: moneypenny-api-base
+    mem_limit: 1024m
+    build:
+      context: ../../../
+      dockerfile: ./moneypenny-deployment/docker/image/moneypenny-api/Dockerfile.base
+    ports:
+      - ${MONEYPENNY_API_PORT:-5001}:5000
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NUTRIENT_DWS_API_KEY=${NUTRIENT_DWS_API_KEY}
+
+  # moneypenny-frontend:
+  #   image: moneypenny-frontend-base
+  #   mem_limit: 512m
+  #   build:
+  #     context: ../../../
+  #     dockerfile: ./moneypenny-deployment/docker/image/moneypenny-frontend/Dockerfile.base
+  #   ports:
+  #     - ${MONEYPENNY_FRONTEND_PORT:-5002}:5173
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true
+  #     - MONEYPENNY_API_PORT=${MONEYPENNY_API_PORT:-5001}
+  #   # depends_on:
+  #   #   moneypenny-api:
+  #   #     condition: service_healthy

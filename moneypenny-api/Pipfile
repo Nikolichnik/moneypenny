@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+quart = ">=0.19,<1.0"
+quart-schema = "*"
+quart-cors = "*"
+
+hypercorn = "*"
+
+dynaconf = "*"
+pyyaml = "*"
+
+pandas = ">=2.2.0"
+
+langchain = "*"
+langchain-mcp-adapters = "*"
+langchain-openai = "*"
+
+langgraph = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
