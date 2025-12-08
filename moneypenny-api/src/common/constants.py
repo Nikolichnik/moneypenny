@@ -2,12 +2,12 @@
 Common constants used throughout the codebase.
 """
 
+# Directories
+DIR_RESOURCE = "resource"
 
 # Environment variables
 ENV_CORS_ORIGIN = "CORS_ORIGIN"
-
-# Directories
-DIR_RESOURCE = "resource"
+ENV_DOCUMENT_BASE_PATH = "DOCUMENT_BASE_PATH"
 
 # Keys
 KEY_PROMPT = "prompt"
@@ -25,6 +25,7 @@ KEY_ENV = "env"
 VALUE_USER = "user"
 VALUE_TOOL = "tool"
 VALUE_AGENT = "agent"
+VALUE_DOCUMENT_BASE_PATH_DEFAULT = "/moneypenny-api/resource/document"
 
 # Nodes
 NODE_ENTRY_POINT = "entry_point"
@@ -43,5 +44,6 @@ PROMPT_APPENDIX_NO_QUESTIONS = ". Use available tools only. Do not invent tools 
 ENCODING_UTF8 = "utf-8"
 NEWLINE = "\n"
 APPLICATION_JSON = "application/json"
+APPLICATION_OCTET_STREAM = "application/octet-stream"
 TEXT_EVENT_STREAM = "text/event-stream"
 TRANSPORT_STDIO = "stdio"

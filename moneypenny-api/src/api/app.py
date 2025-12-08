@@ -19,6 +19,7 @@ from common.constants import ENV_CORS_ORIGIN
 from common.setup import get_config_settings, set_up_logging
 
 from api.process_api import process_blueprint
+from api.document_api import document_blueprint
 
 
 warnings.filterwarnings("ignore", message="Multiple schemas resolved to the name ")
@@ -57,11 +58,16 @@ QuartSchema(
         {
             "name": "Document Processing",
             "description": "Operations for processing documents with AI agents",
+        },
+        {
+            "name": "Document Management",
+            "description": "Operations for listing and retrieving documents",
         }
     ],
 )
 
 app.register_blueprint(process_blueprint)
+app.register_blueprint(document_blueprint)
 
 asgi_app = app
 

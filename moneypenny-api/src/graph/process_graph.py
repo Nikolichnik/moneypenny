@@ -4,6 +4,8 @@ The ProcessGraph module.
 
 from logging import getLogger
 
+import os
+
 import gc
 
 from typing import Any, Type, Union, get_type_hints
@@ -28,6 +30,8 @@ from common.constants import (
     VALUE_TOOL,
     VALUE_AGENT,
     PROMPT_APPENDIX_NO_QUESTIONS,
+    ENV_DOCUMENT_BASE_PATH,
+    VALUE_DOCUMENT_BASE_PATH_DEFAULT,
 )
 
 from schema.process_graph_state_schema import ProcessGraphState
@@ -210,10 +214,11 @@ class ProcessGraph(StateGraph):
         state[KEY_PROMPT] += PROMPT_APPENDIX_NO_QUESTIONS
 
         # 2. Set up MCP server tools and agent.
+        document_base_path = os.getenv(ENV_DOCUMENT_BASE_PATH, VALUE_DOCUMENT_BASE_PATH_DEFAULT)
         tools = await MCPServerToolFactory.create(
             name="nutrient-dws",
             command="dws-mcp-wrapper.sh",
-            args=["--sandbox", "/moneypenny-api/resource/document"],
+            args=["--sandbox", document_base_path],
         )
 
         self.agent = create_agent(

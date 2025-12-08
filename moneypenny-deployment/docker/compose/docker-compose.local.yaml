@@ -6,7 +6,7 @@ services:
       dockerfile: ./moneypenny-deployment/docker/image/moneypenny-api/Dockerfile.local
     volumes:
       - ../../../moneypenny-api/src:/moneypenny-api/src
-      - ../../../moneypenny-api/resource/document:/moneypenny-api/resource/document
+      - ../../../moneypenny-api/resource/document:${DOCUMENT_BASE_PATH:-/moneypenny-api/resource/document}
 
   # moneypenny-frontend:
   #   image: moneypenny-frontend-base

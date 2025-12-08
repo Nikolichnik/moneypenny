@@ -35,7 +35,7 @@ process_blueprint = Blueprint("process", __name__, url_prefix="/process")
 @validate_request(ProcessRequestSchema)
 async def process_documents(data: ProcessRequestSchema) -> tuple[Response, dict]:
     """
-    Process documents using AI agent with natural language instructions.  
+    Process documents using AI agent with natural language instructions.
 
     This endpoint accepts a natural language prompt describing document operations
     and streams processing updates as Server-Sent Events (SSE). The AI agent uses

@@ -10,6 +10,7 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - NUTRIENT_DWS_API_KEY=${NUTRIENT_DWS_API_KEY}
+      - DOCUMENT_BASE_PATH=${DOCUMENT_BASE_PATH:-/moneypenny-api/resource/document}
 
   # moneypenny-frontend:
   #   image: moneypenny-frontend-base
