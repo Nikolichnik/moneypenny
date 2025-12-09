@@ -86,3 +86,26 @@ class DocumentService:
             raise ObjectNotFoundException(f"Document not found: {filename}")
 
         return document
+
+    def delete_document(self, filename: str) -> None:
+        """
+        Delete a document from the repository.
+
+        Args:
+            filename: Name of the document to delete
+
+        Raises:
+            ObjectNotFoundException: If document not found
+        """
+        logger.debug("Deleting document: %s", filename)
+
+        # Check if document exists first
+        document = self.repository.get_document(filename, include_content=False)
+
+        if not document:
+            raise ObjectNotFoundException(f"Document not found: {filename}")
+
+        # Delete the document
+        self.repository.delete_document(filename)
+
+        logger.info("Document deleted successfully: %s", filename)

@@ -3,7 +3,7 @@ FROM node:20-alpine AS moneypenny-frontend-base
 WORKDIR /app
 
 # Copy package.json first for better caching
-COPY ../../../moneypenny-frontend/package.json ./package.json
+COPY moneypenny-frontend/package.json ./package.json
 
 # Ensure build tools available if native modules needed
 RUN apk add --no-cache python3 make g++
@@ -15,13 +15,14 @@ RUN rm -rf node_modules package-lock.json
 RUN npm install --include=dev
 
 # Copy config files
-COPY ../../../moneypenny-frontend/tailwind.config.js ./tailwind.config.js
-COPY ../../../moneypenny-frontend/postcss.config.js ./postcss.config.js
-COPY ../../../moneypenny-frontend/vite.config.ts ./vite.config.ts
-COPY ../../../moneypenny-frontend/tsconfig*.json ./
-COPY ../../../moneypenny-frontend/index.html ./index.html
+COPY moneypenny-frontend/tailwind.config.js ./tailwind.config.js
+COPY moneypenny-frontend/postcss.config.js ./postcss.config.js
+COPY moneypenny-frontend/vite.config.ts ./vite.config.ts
+COPY moneypenny-frontend/tsconfig*.json ./
+COPY moneypenny-frontend/index.html ./index.html
 
 # Copy source files
-COPY ../../../moneypenny-frontend/src ./src
+COPY moneypenny-frontend/src ./src
 
-RUN npm run build
+# Start dev server
+CMD ["npm", "run", "dev"]

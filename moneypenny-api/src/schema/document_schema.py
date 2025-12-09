@@ -1,4 +1,6 @@
-"""Document API schemas for request/response validation."""
+"""
+Document API schemas for request/response validation.
+"""
 
 from dataclasses import dataclass
 from typing import List

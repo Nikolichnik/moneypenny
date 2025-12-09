@@ -129,6 +129,45 @@ async def get_document(filename: str) -> Response:
     )
 
 
+@document_blueprint.route("/<string:filename>", methods=["DELETE"])
+@tag(["Document Management"])
+async def delete_document(filename: str) -> tuple[dict, int]:
+    """
+    Delete a document from the repository.
+
+    Permanently removes the specified document file from the document directory.
+
+    **Use cases:**
+    - Remove unwanted or outdated documents
+    - Clean up test files
+    - Manage document lifecycle
+
+    **Security:**
+    - Path traversal protection enabled
+    - Only files within document directory can be deleted
+
+    Args:
+        filename: Name of the document file to delete
+
+    Returns:
+        Success confirmation message
+
+    Responses:
+        200: Document successfully deleted
+        404: Document not found
+        403: Access denied (path traversal attempt)
+        500: Server error while deleting document
+    """
+    logger.debug("Deleting document: %s", filename)
+
+    document_service.delete_document(filename)
+
+    return {
+        "message": f"Document '{filename}' deleted successfully",
+        "filename": filename
+    }, 200
+
+
 @document_blueprint.errorhandler(ObjectNotFoundException)
 async def handle_exception(exception: Exception) -> tuple[dict, int]:
     """

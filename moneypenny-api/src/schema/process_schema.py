@@ -8,7 +8,7 @@ from typing import Optional
 class ProcessRequestSchema:
     """
     Request schema for document processing.
-    
+
     The prompt should describe what document operations you want to perform.
     Supported operations include:
     - Adding watermarks (text or image)

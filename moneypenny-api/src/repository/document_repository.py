@@ -27,6 +27,15 @@ class DocumentRepository:
     Handles low-level file operations for document management.
     """
 
+    # Files to exclude from document listing
+    EXCLUDED_FILES = {
+        '.DS_Store',      # macOS metadata
+        'Thumbs.db',      # Windows thumbnail cache
+        'desktop.ini',    # Windows folder settings
+        '.gitkeep',       # Git placeholder
+        '.gitignore',     # Git ignore rules
+    }
+
     def __init__(self, base_path: str):
         """
         Initialize repository with base path.
@@ -43,6 +52,8 @@ class DocumentRepository:
         """
         List all documents in the base directory.
 
+        Excludes system files like .DS_Store, Thumbs.db, etc.
+
         Returns:
             List of Document objects with metadata
         """
@@ -50,7 +61,7 @@ class DocumentRepository:
 
         try:
             for file_path in self.base_path.iterdir():
-                if file_path.is_file():
+                if file_path.is_file() and file_path.name not in self.EXCLUDED_FILES:
                     document = self._create_document_from_path(file_path)
 
                     if document:
@@ -58,7 +69,7 @@ class DocumentRepository:
 
             logger.debug("Found %d documents in %s", len(documents), self.base_path)
 
-            return documents
+            return sorted(documents, key=lambda doc: doc.modified_on)
 
         except Exception as e:
             logger.error("Error listing documents: %s", e, exc_info=True)
@@ -149,3 +160,32 @@ class DocumentRepository:
             return resolved_path.parent == resolved_base
         except Exception:  # pylint: disable=broad-except
             return False
+
+    def delete_document(self, filename: str) -> None:
+        """
+        Delete a document from the filesystem.
+
+        Args:
+            filename: Name of the file to delete
+
+        Raises:
+            ValueError: If path traversal attempt detected
+            FileNotFoundError: If file does not exist
+        """
+        file_path = self.base_path / filename
+
+        # Security check: ensure file is within base path
+        if not self._is_safe_path(file_path):
+            logger.warning("Attempted deletion of file outside base path: %s", filename)
+            raise ValueError(f"Access denied: {filename}")
+
+        if not file_path.exists():
+            logger.warning("Cannot delete non-existent document: %s", filename)
+            raise FileNotFoundError(f"Document not found: {filename}")
+
+        try:
+            file_path.unlink()
+            logger.info("Deleted document: %s", filename)
+        except Exception as e:
+            logger.error("Error deleting document %s: %s", filename, e, exc_info=True)
+            raise

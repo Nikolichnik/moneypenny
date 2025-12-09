@@ -35,9 +35,19 @@ for key in dir(settings):
 
 set_up_logging(Path(app.root_path).parent / "logger_config.yaml")
 
-# Enable CORS for a specific domain with any port
-cors_origin = os.environ.get(ENV_CORS_ORIGIN, "http://localhost:*")
-app = cors(app, allow_origin=cors_origin)
+# Enable CORS for local development
+cors_origins = os.environ.get(ENV_CORS_ORIGIN, "http://localhost:5002")
+
+if "," in cors_origins:
+    cors_origins = [origin.strip() for origin in cors_origins.split(",")]
+
+app = cors(
+    app, 
+    allow_origin=cors_origins,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+    allow_credentials=True
+)
 
 # Configure QuartSchema with OpenAPI documentation
 QuartSchema(

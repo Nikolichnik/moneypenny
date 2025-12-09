@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+    --primary: 32 95% 58%;
+    --primary-foreground: 0 0% 13%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 13%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 42 80% 63%;
+    --accent-foreground: 0 0% 13%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 32 95% 58%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 32 95% 58%;
+    --primary-foreground: 0 0% 13%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 42 80% 63%;
+    --accent-foreground: 0 0% 13%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 32 95% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Nutrient-inspired scrollbar */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  /* Subtle material texture */
+  .material-texture {
+    position: relative;
+  }
+  
+  .material-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 15% 20%, hsl(var(--accent) / 0.15) 0%, transparent 1px),
+      radial-gradient(circle at 85% 15%, hsl(var(--accent) / 0.12) 0%, transparent 1px),
+      radial-gradient(circle at 10% 60%, hsl(var(--accent) / 0.08) 0%, transparent 1px),
+      radial-gradient(circle at 90% 75%, hsl(var(--accent) / 0.1) 0%, transparent 1px),
+      radial-gradient(circle at 20% 85%, hsl(var(--accent) / 0.1) 0%, transparent 1px),
+      radial-gradient(circle at 75% 45%, hsl(var(--accent) / 0.09) 0%, transparent 1px),
+      radial-gradient(circle at 45% 25%, hsl(var(--muted-foreground) / 0.08) 0%, transparent 1px),
+      radial-gradient(circle at 65% 70%, hsl(var(--muted-foreground) / 0.07) 0%, transparent 1px),
+      radial-gradient(circle at 30% 40%, hsl(var(--accent) / 0.06) 0%, transparent 1px);
+    background-size: 100% 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Decorative dots pattern - Nutrient style with random scattered dots */
+  .noise-texture::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle, hsl(var(--accent)) 2.5px, transparent 2.5px),
+      radial-gradient(circle, hsl(var(--accent) / 0.7) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--muted-foreground) / 0.5) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--accent) / 0.6) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--accent) / 0.8) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--accent)) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--muted-foreground) / 0.4) 1px, transparent 1px),
+      radial-gradient(circle, hsl(var(--accent) / 0.6) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--accent) / 0.5) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--muted-foreground) / 0.5) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--accent) / 0.7) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--accent)) 2.5px, transparent 2.5px),
+      radial-gradient(circle, hsl(var(--muted-foreground) / 0.4) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--accent) / 0.6) 1px, transparent 1px),
+      radial-gradient(circle, hsl(var(--accent) / 0.8) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--muted-foreground) / 0.5) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--accent) / 0.5) 1px, transparent 1px),
+      radial-gradient(circle, hsl(var(--accent)) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--accent) / 0.7) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--muted-foreground) / 0.4) 1px, transparent 1px),
+      radial-gradient(circle, hsl(var(--accent) / 0.6) 2px, transparent 2px),
+      radial-gradient(circle, hsl(var(--accent) / 0.5) 1.5px, transparent 1.5px),
+      radial-gradient(circle, hsl(var(--muted-foreground) / 0.5) 1px, transparent 1px),
+      radial-gradient(circle, hsl(var(--accent) / 0.8) 1.5px, transparent 1.5px);
+    background-size: 
+      5px 5px, 4px 4px, 3px 3px, 3px 3px,
+      4px 4px, 4px 4px, 2px 2px, 4px 4px,
+      3px 3px, 4px 4px, 3px 3px, 5px 5px,
+      3px 3px, 2px 2px, 4px 4px, 3px 3px,
+      2px 2px, 4px 4px, 3px 3px, 2px 2px,
+      4px 4px, 3px 3px, 2px 2px, 3px 3px;
+    background-position: 
+      7% 8%, 82% 12%, 23% 18%, 91% 22%,
+      14% 28%, 58% 15%, 88% 35%, 31% 42%,
+      67% 25%, 12% 51%, 76% 48%, 43% 62%,
+      19% 71%, 85% 68%, 38% 82%, 94% 78%,
+      26% 91%, 63% 88%, 51% 38%, 9% 95%,
+      72% 58%, 47% 9%, 34% 73%, 79% 86%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
