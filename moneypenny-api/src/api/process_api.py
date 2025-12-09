@@ -2,6 +2,10 @@
 This module contains the Process API Blueprint.
 """
 
+import os
+
+import asyncio
+
 import json
 
 from logging import getLogger
@@ -75,8 +79,38 @@ async def process_documents(data: ProcessRequestSchema) -> tuple[Response, dict]
     graph = ProcessGraph(process_data)
 
     async def event_stream():
-        async for update in graph.stream():
-            yield f"{KEY_DATA}: {json.dumps(update)}{NEWLINE}{NEWLINE}"
+        heartbeat_interval = max(1, int(os.getenv("SSE_HEARTBEAT_SECONDS", "15")))
+        queue: asyncio.Queue[str | None] = asyncio.Queue()
+
+        async def produce_updates():
+            try:
+                async for update in graph.stream():
+                    await queue.put(f"{KEY_DATA}: {json.dumps(update)}{NEWLINE}{NEWLINE}")
+            finally:
+                await queue.put(None)
+
+        async def send_heartbeats():
+            # Periodic SSE comment frames to keep intermediaries from timing out idle connections.
+            try:
+                while True:
+                    await asyncio.sleep(heartbeat_interval)
+                    await queue.put(f": keep-alive{NEWLINE}{NEWLINE}")
+            except asyncio.CancelledError:
+                return
+
+        producer_task = asyncio.create_task(produce_updates())
+        heartbeat_task = asyncio.create_task(send_heartbeats())
+
+        try:
+            while True:
+                chunk = await queue.get()
+                if chunk is None:
+                    break
+                yield chunk
+        finally:
+            heartbeat_task.cancel()
+            producer_task.cancel()
+            await asyncio.gather(heartbeat_task, producer_task, return_exceptions=True)
 
     return Response(event_stream(), content_type=TEXT_EVENT_STREAM)
 

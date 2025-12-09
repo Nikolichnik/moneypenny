@@ -144,3 +144,8 @@ If you wish to use API only, you can interact with the Moneypenny API using tool
 ### Moneypenny Frontend
 
 Once the services are deployed, you can access the Moneypenny frontend at `http://localhost:5002`. The frontend provides a simple interface for interacting with the Moneypenny API.
+
+## Known Issues
+
+* When using Nutrient PDF Viewer, document loading fails on the first attempt. Every subsequent attempt works as expected. This is likely timing issue related to the viewer initialization. Relevant [issue](https://github.com/Nikolichnik/moneypenny/issues/1) created.
+* There is a one minute timeout when performing document processing. If processing takes longer than one minute, the request will timeout and fail. Any eventual intermediary documents are created in the sandbox and are available for subsequent viewing. Relevant [issue](https://github.com/Nikolichnik/moneypenny/issues/2) created.

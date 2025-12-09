@@ -2,4 +2,4 @@ FROM moneypenny-api-base AS moneypenny-api-local
 
 RUN pipenv install --dev
 
-CMD [ "pipenv", "run", "hypercorn", "--bind", "0.0.0.0:5000", "--reload", "api.app:asgi_app" ]
+CMD [ "pipenv", "run", "hypercorn", "-c", "/moneypenny-api/hypercorn.toml", "api.app:asgi_app" ]
