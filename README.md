@@ -1,6 +1,6 @@
 # Moneypenny
 
-[Moneypenny](https://en.wikipedia.org/wiki/Miss_Moneypenny) is a project that provides a wrapper around Nutrient DWS API using `nutrient-dws` MCP server. It allows users to easily interact with the Nutrient DWS API using a simple and intuitive interface. The project is designed to be easy to use and deploy, making it accessible to a wide range of users.
+[Moneypenny](https://en.wikipedia.org/wiki/Miss_Moneypenny) is a project that provides a wrapper around [Nutrient DWS API](https://nutrient.io/) using `nutrient-dws` MCP server. It allows users to easily interact with the Nutrient DWS API using a simple and intuitive interface. The project is designed to be easy to use and deploy, making it accessible to a wide range of users.
 
 ![](./moneypenny.png)
 
