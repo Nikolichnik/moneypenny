@@ -48,11 +48,19 @@ In order to deploy Moneypenny services, make sure you have [Docker](https://www.
     ```env
     # Description: Environment variables for docker-compose
 
+    # Ports
     MONEYPENNY_API_PORT=5001
     MONEYPENNY_FRONTEND_PORT=5002
 
+    # API Keys
     OPENAI_API_KEY=your_openai_api_key
     NUTRIENT_DWS_API_KEY=your_nutrient_dws_api_key
+
+    # URLs
+    VITE_API_URL=http://localhost:5001
+
+    # Paths
+    DOCUMENT_BASE_PATH=/moneypenny-api/resource/document
     ```
 2. Navigate to `moneypenny-deployment/docker` folder.
 3. Use the utility script `deploy.sh` to deploy the services (Note: In all examples below, GNU/Linux and MacOS version of the script is used, however, there are Windows versions available as well. Please do note that Windows versions of the script are not tested as extensively as the GNU/Linux and MacOS version):
